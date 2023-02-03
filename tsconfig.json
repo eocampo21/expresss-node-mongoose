@@ -1,0 +1,18 @@
+// ref https://www.geeksforgeeks.org/how-to-use-express-in-typescript/
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "rootDir": "./",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "moduleResolution":"node",
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
