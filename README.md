@@ -2,3 +2,6 @@
 - JWT
 - express
 - mongoose
+
+## Execute to run:
+npm run dev
