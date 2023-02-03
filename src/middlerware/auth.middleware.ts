@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
 import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
@@ -8,9 +8,7 @@ import userModel from '../user/user.model';
 require('dotenv').config({path: __dirname + '/.env'});
 
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
-  // response.setHeader('jwt', ['Authorization=;Max-age=0']);
   let {token} = request.cookies.jwt;
-  console.log("token ", token);
   if (token) {
       const secret = process.env.JWT_SECRET || '';
       try {
