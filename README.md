@@ -3,5 +3,5 @@
 - express
 - mongoose
 
-## Execute to run:
+## Execute the app:
 npm run dev
