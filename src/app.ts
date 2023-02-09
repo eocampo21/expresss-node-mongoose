@@ -4,6 +4,7 @@ import express from 'express';
 import bodyParser from "body-parser";
 import MongoConnection from "./utils/mongoConnection";
 import errorMiddleware from "./middlerware/error.middleware";
+import 'reflect-metadata';
 
 require('dotenv').config({path: __dirname + '/.env'});
 

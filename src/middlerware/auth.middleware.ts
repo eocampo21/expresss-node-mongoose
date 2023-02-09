@@ -8,24 +8,23 @@ import userModel from '../user/user.model';
 require('dotenv').config({path: __dirname + '/.env'});
 
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
+  // No jwt token provided - not logged in
+  if (typeof request.cookies.jwt === 'undefined') next(new AuthenticationTokenMissingException());
+
   let {token} = request.cookies.jwt;
-  if (token) {
-      const secret = process.env.JWT_SECRET || '';
-      try {
-        const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
-        const id = verificationResponse._id;
-        const user = await userModel.findById(id);
-        if (user) {
-          request.user = user;
-          next();
-        } else {
-          next(new WrongAuthenticationTokenException());
-        }
-      } catch (error) {
-        next(new WrongAuthenticationTokenException());
-      }
-  } else {
-    next(new AuthenticationTokenMissingException());
+  const secret = process.env.JWT_SECRET || '';
+  try {
+    const verificationResponse = jwt.verify(token, secret) as DataStoredInToken;
+    const id = verificationResponse._id;
+    const user = await userModel.findById(id);
+    if (user) {
+      request.user = user;
+      next();
+    } else {
+      next(new WrongAuthenticationTokenException());
+    }
+  } catch (error) {
+    next(new WrongAuthenticationTokenException());
   }
 }
 

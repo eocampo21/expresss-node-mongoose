@@ -1,12 +1,26 @@
-import{ Document, model, Schema } from 'mongoose';
+import * as mongoose from 'mongoose';
 import User from './user.interface';
- 
-const userSchema = new Schema({
+
+const addressSchema = new mongoose.Schema({
+  city: String,
+  street: String,
+  countru: String,
+});
+
+const userSchema = new mongoose.Schema(  {
+  email: String,
   firstName: String,
   lastName: String,
-  email: String,
+  address: addressSchema,
   password: String,
-});
+  posts: [ // An user could has several posts
+    {
+      ref: 'Post',
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
+},);
  
-const userModel = model<User & Document>('User', userSchema);
+const userModel = mongoose.model<User & mongoose.Document>('User', userSchema);
+
 export default userModel;

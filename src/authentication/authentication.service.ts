@@ -15,17 +15,16 @@ class AuthenticationService {
         throw new UserWithThatEmailAlreadyExistsException(userData.email)
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
+    console.log('hashedPassword: '+hashedPassword);
     const user = await this.user.create({
       ...userData,
       password: hashedPassword,
     });
     user.password = undefined;
-    const tokenData = this.createToken(user);
     return {
       user,
     };
   }
-
 
   public createToken(user: User): TokenData {
     const expiresIn = 60 * 60; // an hour

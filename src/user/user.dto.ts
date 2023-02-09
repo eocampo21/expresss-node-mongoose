@@ -1,22 +1,34 @@
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import CreateAddressDto from './address.dto';
+import { Type } from 'class-transformer';
+import CreatePostDto from '../post/post.dto';
 
 class CreateUserDto {
   @IsString()
-  public firstName: string = '';
+  public firstName!: string;
 
   @IsString()
-  public lastName: string = '';
+  public lastName!: string;
 
   @IsString()
-  public email: string = '';
+  @IsNotEmpty()
+  public email!: string;
 
   @IsString()
-  public password: string = '';
+  @IsNotEmpty()
+  public password!: string;
 
-  @IsOptional()
   @ValidateNested()
-  public address?: CreateAddressDto;
+  @IsOptional()
+  @IsObject()
+  @Type(() => CreateAddressDto)
+  public address!: CreateAddressDto;
+
+  @ValidateNested()
+  @IsOptional()
+  @IsObject()
+  @Type(() => CreatePostDto)
+  public posts!: CreatePostDto;
 }
 
 export default CreateUserDto;
